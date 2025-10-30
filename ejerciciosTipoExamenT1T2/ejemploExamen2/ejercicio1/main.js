@@ -26,10 +26,18 @@ const mostrarTienda = (productos) => {
 
 // Función para borrar del inventario los productos que no tienen stock
 const borrarObjetosSinStock = (productos) => {
-    productos.filter((producto) => {
-        producto.stock > 0;
-    })
-    return productos;
+    // La función filter devuelve un array con los productos filtrados, por lo que lo guardamos en una variable y luego la devolvemos
+    let productosFiltrados = productos.filter(producto => producto.stock > 0)
+
+    return productosFiltrados;
+}
+
+// Función para mostrar los objetos de la mochila
+const mostrarMochila = (jugador) => {
+    let {mochila} = jugador;
+    mochila.forEach(productoComprado => {
+        console.log(`${productoComprado.nombre}`);
+    });
 }
 
 do{
@@ -46,9 +54,8 @@ do{
     }while(!opcionElegida);
 
     // Comprobamos si el objeto existe y si tiene stock
-    let indiceProducto = productosFiltrados.findIndex((producto) => {
-        producto.nombre === opcionElegida;
-    });
+    let indiceProducto = productosFiltrados.findIndex(producto => producto.nombre.toLowerCase() == opcionElegida);
+
     if(indiceProducto >= 0){
         // Comprobamos si el jugador tiene dinero suficiente
         if(jugador.dinero >= productosFiltrados[indiceProducto].precio){
@@ -65,10 +72,10 @@ do{
         console.log(`Ese producto no existe `);
     }
     
-}while(opcionElegida !== "salir" || jugador.dinero <= 0 || productosFiltrados.length === 0);
+}while(opcionElegida !== "salir" && jugador.dinero > 0 && productosFiltrados.length !== 0);
 
 // Mostramos el estado final de la partida
 console.log(`${jugador.nombre} tienes ${jugador.dinero} pokeyenes`);
-console.log(`${jugador.nombre} has comprado todo esto: \n
-     ${jugador.mochila}`);
+console.log(`${jugador.nombre} has comprado todo esto:  \n`);
+mostrarMochila(jugador);
 mostrarTienda(productosFiltrados);
