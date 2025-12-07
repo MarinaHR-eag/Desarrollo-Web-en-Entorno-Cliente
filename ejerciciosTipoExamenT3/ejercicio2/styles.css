@@ -1,0 +1,12 @@
+#items {
+  list-style: none;
+  padding: 0;
+}
+
+#items li {
+  padding: 8px;
+  border: 1px solid #ccc;
+  margin-bottom: 4px;
+  background: #eee;
+  cursor: grab;
+}
